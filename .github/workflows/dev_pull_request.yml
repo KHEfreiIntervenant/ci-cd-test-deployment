@@ -38,3 +38,4 @@ jobs:
 
       - name: test building frontend docker image
         run: cd ./frontend && docker build -t ci-cd:frontend .
+
