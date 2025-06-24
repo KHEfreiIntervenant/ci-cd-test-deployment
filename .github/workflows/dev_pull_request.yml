@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           
-      - run: cd ./frontend && npm install && npm lint && npm run build
+      - run: cd ./frontend && npm install && npm run lint && npm run build
 
       - name: test building backend docker image
         run: cd ./backend && docker build -t ci-cd:backend .
