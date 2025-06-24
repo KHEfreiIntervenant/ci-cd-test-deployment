@@ -5,11 +5,10 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ "dev" ]
+    branches: ["dev"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,30 +17,25 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Backend Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd ./backend
-    - run: npm install
-    - run: npm test
+      - uses: actions/checkout@v4
 
-    - uses: actions/checkout@v4
-    - name: Frontend Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd ./frontend
-    - run: npm install
-    - run: npm lint
-    - run: npm run build
+      - name: Backend Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - run: cd ./backend && npm install && npm test
 
-    
-    - name: test building backend docker image
-      run: cd ./backend && docker build -t ci-cd:backend .
+      - name: Frontend Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - run: cd ./frontend && npm install && npm lint && npm run build
 
-    - name: test building frontend docker image
-      run: cd ./frontend && docker build -t ci-cd:frontend .
+      - name: test building backend docker image
+        run: cd ./backend && docker build -t ci-cd:backend .
+
+      - name: test building frontend docker image
+        run: cd ./frontend && docker build -t ci-cd:frontend .
+
