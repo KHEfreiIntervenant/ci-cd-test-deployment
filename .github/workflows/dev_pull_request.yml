@@ -18,20 +18,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Backend Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          
       - run: cd ./backend && npm install && npm test
-      
 
-      - uses: actions/checkout@v4
       - name: Frontend Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          
       - run: cd ./frontend && npm install && npm lint && npm run build
 
       - name: test building backend docker image
